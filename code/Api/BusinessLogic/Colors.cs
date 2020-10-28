@@ -13,20 +13,20 @@ namespace Api.BusinessLogic
     {
         public static ResultObject GetColors()
         {
-            // try
-            // {
+            try
+            {
                 ABCEntities context = new ABCEntities();
                 List<COLOR> colors = context.COLOR.AsNoTracking().ToList();
                 return BasicWrapper.SuccessResult(GeneralWrapper.Colors(colors));
-            // }
-            // catch (BusinessException exp)
-            // {
-            //     return BasicWrapper.ErrorResult(exp.Code, exp.Message);
-            // }
-            // catch (Exception exp)
-            // {
-            //     return BasicWrapper.GeneralErrorResult();
-            // }
+            }
+            catch (BusinessException exp)
+            {
+                return BasicWrapper.ErrorResult(exp.Code, exp.Message);
+            }
+            catch (Exception exp)
+            {
+                return BasicWrapper.GeneralErrorResult();
+            }
         }
         
         public static void checkColor(int? id, ABCEntities context)
