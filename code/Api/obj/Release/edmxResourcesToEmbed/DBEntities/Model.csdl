@@ -1,0 +1,87 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ABCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="COLOR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="MODEL" Relationship="Self.FK_MODEL_COLOR" FromRole="COLOR" ToRole="MODEL" />
+  </EntityType>
+  <EntityType Name="MODEL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TYPE_ID" Type="Int32" Nullable="false" />
+    <Property Name="COLOR_ID" Type="Int32" Nullable="false" />
+    <Property Name="CONVERTIBLE" Type="Byte" Nullable="false" />
+    <NavigationProperty Name="COLOR" Relationship="Self.FK_MODEL_COLOR" FromRole="MODEL" ToRole="COLOR" />
+    <NavigationProperty Name="TYPE" Relationship="Self.FK_MODEL_TYPE" FromRole="MODEL" ToRole="TYPE" />
+  </EntityType>
+  <EntityType Name="TYPE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" />
+    <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="COST" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+    <NavigationProperty Name="MODEL" Relationship="Self.FK_MODEL_TYPE" FromRole="TYPE" ToRole="MODEL" />
+  </EntityType>
+  <EntityType Name="MODEL_DETAILS">
+    <Key>
+      <PropertyRef Name="MODEL_ID" />
+      <PropertyRef Name="TYPE_ID" />
+      <PropertyRef Name="COLOR_ID" />
+      <PropertyRef Name="MODEL_CONVERTIBLE" />
+      <PropertyRef Name="COLOR_NAME" />
+      <PropertyRef Name="TYPE_NAME" />
+      <PropertyRef Name="TYPE_COST" />
+    </Key>
+    <Property Name="MODEL_ID" Type="Int32" Nullable="false" />
+    <Property Name="TYPE_ID" Type="Int32" Nullable="false" />
+    <Property Name="COLOR_ID" Type="Int32" Nullable="false" />
+    <Property Name="MODEL_CONVERTIBLE" Type="Byte" Nullable="false" />
+    <Property Name="COLOR_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TYPE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="TYPE_COST" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_MODEL_COLOR">
+    <End Role="COLOR" Type="Self.COLOR" Multiplicity="1" />
+    <End Role="MODEL" Type="Self.MODEL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLOR">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MODEL">
+        <PropertyRef Name="COLOR_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MODEL_TYPE">
+    <End Role="TYPE" Type="Self.TYPE" Multiplicity="1" />
+    <End Role="MODEL" Type="Self.MODEL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TYPE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MODEL">
+        <PropertyRef Name="TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ABCEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="COLOR" EntityType="Self.COLOR" />
+    <EntitySet Name="MODEL" EntityType="Self.MODEL" />
+    <EntitySet Name="TYPE" EntityType="Self.TYPE" />
+    <EntitySet Name="MODEL_DETAILS" EntityType="Self.MODEL_DETAILS" />
+    <AssociationSet Name="FK_MODEL_COLOR" Association="Self.FK_MODEL_COLOR">
+      <End Role="COLOR" EntitySet="COLOR" />
+      <End Role="MODEL" EntitySet="MODEL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MODEL_TYPE" Association="Self.FK_MODEL_TYPE">
+      <End Role="TYPE" EntitySet="TYPE" />
+      <End Role="MODEL" EntitySet="MODEL" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

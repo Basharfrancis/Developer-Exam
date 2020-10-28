@@ -1,0 +1,147 @@
+{
+	"info": {
+		"_postman_id": "6613a297-ff49-4d83-8b80-6032f018d754",
+		"name": "ABC Automotive",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Admin GetColors",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://habib.signalsy.net/api/Admin/GetColors",
+					"protocol": "http",
+					"host": [
+						"habib",
+						"signalsy",
+						"net"
+					],
+					"path": [
+						"api",
+						"Admin",
+						"GetColors"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin GetTypes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"url": {
+					"raw": "http://habib.signalsy.net/api/Admin/GetTypes",
+					"protocol": "http",
+					"host": [
+						"habib",
+						"signalsy",
+						"net"
+					],
+					"path": [
+						"api",
+						"Admin",
+						"GetTypes"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin AddModel",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Model\":\r\n    {\r\n        \"TypeId\" : 3,\r\n        \"ColorId\" : 4,\r\n        \"IsConvertible\" : 1\r\n    }\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://habib.signalsy.net/api/Admin/AddModel",
+					"protocol": "http",
+					"host": [
+						"habib",
+						"signalsy",
+						"net"
+					],
+					"path": [
+						"api",
+						"Admin",
+						"AddModel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Admin GetMostProfitableModels",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Month\" : 7\r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://habib.signalsy.net/api/Admin/GetMostProfitableModels",
+					"protocol": "http",
+					"host": [
+						"habib",
+						"signalsy",
+						"net"
+					],
+					"path": [
+						"api",
+						"Admin",
+						"GetMostProfitableModels"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "User GetList",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"Month\" : 5  \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://habib.signalsy.net/api/User/GetList",
+					"protocol": "http",
+					"host": [
+						"habib",
+						"signalsy",
+						"net"
+					],
+					"path": [
+						"api",
+						"User",
+						"GetList"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

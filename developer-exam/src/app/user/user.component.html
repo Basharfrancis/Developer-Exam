@@ -1,0 +1,15 @@
+<h2>See Our Offers</h2>
+
+
+<select class='form-control' [(ngModel)]="monthSelected">
+  <option  *ngFor="let month of months" [value]="month.Id" >{{ month.viewValue }}</option>
+  
+</select>
+<p><span>You selected: </span><b>{{monthSelected}}</b></p>
+<button (click)="check(monthSelected)">Check</button>
+
+<!-- <ul class="search-result">
+  <li *ngFor="let hero of heroes$" >
+      {{hero.Id}}
+  </li>
+</ul> -->

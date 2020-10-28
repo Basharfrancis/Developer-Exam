@@ -1,0 +1,21 @@
+<!-- <div *ngIf="hero">
+    <h2>{{hero.name | uppercase}} Details</h2>
+    <div><span>id: </span>{{hero.id}}</div>
+    <div>
+      <label>name:
+        <input [(ngModel)]="hero.name" placeholder="name"/>
+      </label>
+    </div>
+    <button (click)="goBack()">go back</button>
+    <button (click)="save()">save</button>
+  </div> -->
+
+  <h2>See your Profit</h2>
+
+
+<select class='form-control' [(ngModel)]="monthSelected">
+  <option  *ngFor="let month of months" [value]="month.Id">{{ month.viewValue }}</option>
+  
+</select>
+<p><span>You selected: </span><b>{{monthSelected}}</b></p>
+<button (click)="profit(monthSelected)">Check</button>

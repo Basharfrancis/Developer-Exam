@@ -1,0 +1,45 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ABCModelStoreContainer" CdmEntityContainer="ABCEntities">
+    <EntitySetMapping Name="COLOR">
+      <EntityTypeMapping TypeName="ABCModel.COLOR">
+        <MappingFragment StoreEntitySet="COLOR">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MODEL">
+      <EntityTypeMapping TypeName="ABCModel.MODEL">
+        <MappingFragment StoreEntitySet="MODEL">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+          <ScalarProperty Name="COLOR_ID" ColumnName="COLOR_ID" />
+          <ScalarProperty Name="CONVERTIBLE" ColumnName="CONVERTIBLE" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TYPE">
+      <EntityTypeMapping TypeName="ABCModel.TYPE">
+        <MappingFragment StoreEntitySet="TYPE">
+          <ScalarProperty Name="ID" ColumnName="ID" />
+          <ScalarProperty Name="NAME" ColumnName="NAME" />
+          <ScalarProperty Name="COST" ColumnName="COST" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="MODEL_DETAILS">
+      <EntityTypeMapping TypeName="ABCModel.MODEL_DETAILS">
+        <MappingFragment StoreEntitySet="MODEL_DETAILS">
+          <ScalarProperty Name="MODEL_ID" ColumnName="MODEL_ID" />
+          <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+          <ScalarProperty Name="COLOR_ID" ColumnName="COLOR_ID" />
+          <ScalarProperty Name="MODEL_CONVERTIBLE" ColumnName="MODEL_CONVERTIBLE" />
+          <ScalarProperty Name="COLOR_NAME" ColumnName="COLOR_NAME" />
+          <ScalarProperty Name="TYPE_NAME" ColumnName="TYPE_NAME" />
+          <ScalarProperty Name="TYPE_COST" ColumnName="TYPE_COST" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

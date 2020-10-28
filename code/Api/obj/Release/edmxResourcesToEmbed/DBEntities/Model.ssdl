@@ -1,0 +1,95 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="ABCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="COLOR">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+  </EntityType>
+  <EntityType Name="MODEL">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="TYPE_ID" Type="int" Nullable="false" />
+    <Property Name="COLOR_ID" Type="int" Nullable="false" />
+    <Property Name="CONVERTIBLE" Type="tinyint" Nullable="false" />
+  </EntityType>
+  <EntityType Name="TYPE">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="int" Nullable="false" />
+    <Property Name="NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="COST" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+  </EntityType>
+  <!--Errors Found During Generation:
+warning 6002: The table/view 'ABC.dbo.MODEL_DETAILS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+  <EntityType Name="MODEL_DETAILS">
+    <Key>
+      <PropertyRef Name="MODEL_ID" />
+      <PropertyRef Name="TYPE_ID" />
+      <PropertyRef Name="COLOR_ID" />
+      <PropertyRef Name="MODEL_CONVERTIBLE" />
+      <PropertyRef Name="COLOR_NAME" />
+      <PropertyRef Name="TYPE_NAME" />
+      <PropertyRef Name="TYPE_COST" />
+    </Key>
+    <Property Name="MODEL_ID" Type="int" Nullable="false" />
+    <Property Name="TYPE_ID" Type="int" Nullable="false" />
+    <Property Name="COLOR_ID" Type="int" Nullable="false" />
+    <Property Name="MODEL_CONVERTIBLE" Type="tinyint" Nullable="false" />
+    <Property Name="COLOR_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TYPE_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+    <Property Name="TYPE_COST" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+  </EntityType>
+  <Association Name="FK_MODEL_COLOR">
+    <End Role="COLOR" Type="Self.COLOR" Multiplicity="1" />
+    <End Role="MODEL" Type="Self.MODEL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="COLOR">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MODEL">
+        <PropertyRef Name="COLOR_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_MODEL_TYPE">
+    <End Role="TYPE" Type="Self.TYPE" Multiplicity="1" />
+    <End Role="MODEL" Type="Self.MODEL" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="TYPE">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="MODEL">
+        <PropertyRef Name="TYPE_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="ABCModelStoreContainer">
+    <EntitySet Name="COLOR" EntityType="Self.COLOR" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MODEL" EntityType="Self.MODEL" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="TYPE" EntityType="Self.TYPE" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="MODEL_DETAILS" EntityType="Self.MODEL_DETAILS" store:Type="Views" store:Schema="dbo">
+      <DefiningQuery>SELECT 
+    [MODEL_DETAILS].[MODEL_ID] AS [MODEL_ID], 
+    [MODEL_DETAILS].[TYPE_ID] AS [TYPE_ID], 
+    [MODEL_DETAILS].[COLOR_ID] AS [COLOR_ID], 
+    [MODEL_DETAILS].[MODEL_CONVERTIBLE] AS [MODEL_CONVERTIBLE], 
+    [MODEL_DETAILS].[COLOR_NAME] AS [COLOR_NAME], 
+    [MODEL_DETAILS].[TYPE_NAME] AS [TYPE_NAME], 
+    [MODEL_DETAILS].[TYPE_COST] AS [TYPE_COST]
+    FROM [dbo].[MODEL_DETAILS] AS [MODEL_DETAILS]</DefiningQuery>
+    </EntitySet>
+    <AssociationSet Name="FK_MODEL_COLOR" Association="Self.FK_MODEL_COLOR">
+      <End Role="COLOR" EntitySet="COLOR" />
+      <End Role="MODEL" EntitySet="MODEL" />
+    </AssociationSet>
+    <AssociationSet Name="FK_MODEL_TYPE" Association="Self.FK_MODEL_TYPE">
+      <End Role="TYPE" EntitySet="TYPE" />
+      <End Role="MODEL" EntitySet="MODEL" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

@@ -1,0 +1,22 @@
+<div class="grid grid-pad">
+
+
+  <h2>Add new Cars</h2>
+  <select class='form-control' [(ngModel)]="colorSelected">
+    <option  *ngFor="let color of colors" [value]="color.Id">{{ color.viewValue }}</option>
+    
+  </select>
+  <p><span>You selected: </span><b>{{colorSelected}}</b></p>
+  <select class='form-control' [(ngModel)]="typesSelected">
+    <option  *ngFor="let type of types" [value]="type.Id">{{ type.viewValue }}</option>
+    
+  </select>
+  <p><span>You selected: </span><b>{{typesSelected}}</b></p>
+  
+  
+  <button (click)="add()">Add</button>
+
+  
+</div>
+
+<!-- <app-hero-search></app-hero-search> -->

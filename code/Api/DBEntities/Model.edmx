@@ -1,0 +1,258 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="ABCModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="COLOR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MODEL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="TYPE_ID" Type="int" Nullable="false" />
+          <Property Name="COLOR_ID" Type="int" Nullable="false" />
+          <Property Name="CONVERTIBLE" Type="tinyint" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TYPE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="int" Nullable="false" />
+          <Property Name="NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="COST" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+        </EntityType>
+        <!--Errors Found During Generation:
+warning 6002: The table/view 'ABC.dbo.MODEL_DETAILS' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
+        <EntityType Name="MODEL_DETAILS">
+          <Key>
+            <PropertyRef Name="MODEL_ID" />
+            <PropertyRef Name="TYPE_ID" />
+            <PropertyRef Name="COLOR_ID" />
+            <PropertyRef Name="MODEL_CONVERTIBLE" />
+            <PropertyRef Name="COLOR_NAME" />
+            <PropertyRef Name="TYPE_NAME" />
+            <PropertyRef Name="TYPE_COST" />
+          </Key>
+          <Property Name="MODEL_ID" Type="int" Nullable="false" />
+          <Property Name="TYPE_ID" Type="int" Nullable="false" />
+          <Property Name="COLOR_ID" Type="int" Nullable="false" />
+          <Property Name="MODEL_CONVERTIBLE" Type="tinyint" Nullable="false" />
+          <Property Name="COLOR_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TYPE_NAME" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TYPE_COST" Type="decimal" Precision="18" Scale="3" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MODEL_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="1" />
+          <End Role="MODEL" Type="Self.MODEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MODEL">
+              <PropertyRef Name="COLOR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MODEL_TYPE">
+          <End Role="TYPE" Type="Self.TYPE" Multiplicity="1" />
+          <End Role="MODEL" Type="Self.MODEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TYPE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MODEL">
+              <PropertyRef Name="TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ABCModelStoreContainer">
+          <EntitySet Name="COLOR" EntityType="Self.COLOR" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MODEL" EntityType="Self.MODEL" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TYPE" EntityType="Self.TYPE" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MODEL_DETAILS" EntityType="Self.MODEL_DETAILS" store:Type="Views" store:Schema="dbo">
+            <DefiningQuery>SELECT 
+    [MODEL_DETAILS].[MODEL_ID] AS [MODEL_ID], 
+    [MODEL_DETAILS].[TYPE_ID] AS [TYPE_ID], 
+    [MODEL_DETAILS].[COLOR_ID] AS [COLOR_ID], 
+    [MODEL_DETAILS].[MODEL_CONVERTIBLE] AS [MODEL_CONVERTIBLE], 
+    [MODEL_DETAILS].[COLOR_NAME] AS [COLOR_NAME], 
+    [MODEL_DETAILS].[TYPE_NAME] AS [TYPE_NAME], 
+    [MODEL_DETAILS].[TYPE_COST] AS [TYPE_COST]
+    FROM [dbo].[MODEL_DETAILS] AS [MODEL_DETAILS]</DefiningQuery>
+          </EntitySet>
+          <AssociationSet Name="FK_MODEL_COLOR" Association="Self.FK_MODEL_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="MODEL" EntitySet="MODEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MODEL_TYPE" Association="Self.FK_MODEL_TYPE">
+            <End Role="TYPE" EntitySet="TYPE" />
+            <End Role="MODEL" EntitySet="MODEL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="ABCModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="COLOR">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="MODEL" Relationship="Self.FK_MODEL_COLOR" FromRole="COLOR" ToRole="MODEL" />
+        </EntityType>
+        <EntityType Name="MODEL">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="TYPE_ID" Type="Int32" Nullable="false" />
+          <Property Name="COLOR_ID" Type="Int32" Nullable="false" />
+          <Property Name="CONVERTIBLE" Type="Byte" Nullable="false" />
+          <NavigationProperty Name="COLOR" Relationship="Self.FK_MODEL_COLOR" FromRole="MODEL" ToRole="COLOR" />
+          <NavigationProperty Name="TYPE" Relationship="Self.FK_MODEL_TYPE" FromRole="MODEL" ToRole="TYPE" />
+        </EntityType>
+        <EntityType Name="TYPE">
+          <Key>
+            <PropertyRef Name="ID" />
+          </Key>
+          <Property Name="ID" Type="Int32" Nullable="false" />
+          <Property Name="NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="COST" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+          <NavigationProperty Name="MODEL" Relationship="Self.FK_MODEL_TYPE" FromRole="TYPE" ToRole="MODEL" />
+        </EntityType>
+        <EntityType Name="MODEL_DETAILS">
+          <Key>
+            <PropertyRef Name="MODEL_ID" />
+            <PropertyRef Name="TYPE_ID" />
+            <PropertyRef Name="COLOR_ID" />
+            <PropertyRef Name="MODEL_CONVERTIBLE" />
+            <PropertyRef Name="COLOR_NAME" />
+            <PropertyRef Name="TYPE_NAME" />
+            <PropertyRef Name="TYPE_COST" />
+          </Key>
+          <Property Name="MODEL_ID" Type="Int32" Nullable="false" />
+          <Property Name="TYPE_ID" Type="Int32" Nullable="false" />
+          <Property Name="COLOR_ID" Type="Int32" Nullable="false" />
+          <Property Name="MODEL_CONVERTIBLE" Type="Byte" Nullable="false" />
+          <Property Name="COLOR_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TYPE_NAME" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TYPE_COST" Type="Decimal" Precision="18" Scale="3" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_MODEL_COLOR">
+          <End Role="COLOR" Type="Self.COLOR" Multiplicity="1" />
+          <End Role="MODEL" Type="Self.MODEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="COLOR">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MODEL">
+              <PropertyRef Name="COLOR_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_MODEL_TYPE">
+          <End Role="TYPE" Type="Self.TYPE" Multiplicity="1" />
+          <End Role="MODEL" Type="Self.MODEL" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TYPE">
+              <PropertyRef Name="ID" />
+            </Principal>
+            <Dependent Role="MODEL">
+              <PropertyRef Name="TYPE_ID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ABCEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="COLOR" EntityType="Self.COLOR" />
+          <EntitySet Name="MODEL" EntityType="Self.MODEL" />
+          <EntitySet Name="TYPE" EntityType="Self.TYPE" />
+          <EntitySet Name="MODEL_DETAILS" EntityType="Self.MODEL_DETAILS" />
+          <AssociationSet Name="FK_MODEL_COLOR" Association="Self.FK_MODEL_COLOR">
+            <End Role="COLOR" EntitySet="COLOR" />
+            <End Role="MODEL" EntitySet="MODEL" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MODEL_TYPE" Association="Self.FK_MODEL_TYPE">
+            <End Role="TYPE" EntitySet="TYPE" />
+            <End Role="MODEL" EntitySet="MODEL" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="ABCModelStoreContainer" CdmEntityContainer="ABCEntities">
+          <EntitySetMapping Name="COLOR">
+            <EntityTypeMapping TypeName="ABCModel.COLOR">
+              <MappingFragment StoreEntitySet="COLOR">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MODEL">
+            <EntityTypeMapping TypeName="ABCModel.MODEL">
+              <MappingFragment StoreEntitySet="MODEL">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+                <ScalarProperty Name="COLOR_ID" ColumnName="COLOR_ID" />
+                <ScalarProperty Name="CONVERTIBLE" ColumnName="CONVERTIBLE" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TYPE">
+            <EntityTypeMapping TypeName="ABCModel.TYPE">
+              <MappingFragment StoreEntitySet="TYPE">
+                <ScalarProperty Name="ID" ColumnName="ID" />
+                <ScalarProperty Name="NAME" ColumnName="NAME" />
+                <ScalarProperty Name="COST" ColumnName="COST" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MODEL_DETAILS">
+            <EntityTypeMapping TypeName="ABCModel.MODEL_DETAILS">
+              <MappingFragment StoreEntitySet="MODEL_DETAILS">
+                <ScalarProperty Name="MODEL_ID" ColumnName="MODEL_ID" />
+                <ScalarProperty Name="TYPE_ID" ColumnName="TYPE_ID" />
+                <ScalarProperty Name="COLOR_ID" ColumnName="COLOR_ID" />
+                <ScalarProperty Name="MODEL_CONVERTIBLE" ColumnName="MODEL_CONVERTIBLE" />
+                <ScalarProperty Name="COLOR_NAME" ColumnName="COLOR_NAME" />
+                <ScalarProperty Name="TYPE_NAME" ColumnName="TYPE_NAME" />
+                <ScalarProperty Name="TYPE_COST" ColumnName="TYPE_COST" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
